@@ -1,0 +1,40 @@
+#!/bin/bash
+
+#
+# This script is called from docker-build rule and must not be called outside of a docker container
+#
+
+
+#
+# Configure the docker volume build-root directory
+#
+cd /BUILDROOT
+
+#
+# Create the build directory
+#
+BUILD_DIR=/BUILDHOME/docker-build-root/karoo
+mkdir -p $BUILD_DIR
+
+#
+# Add github to known hosts
+#
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+chmod 644 ~/.ssh/known_hosts
+#
+# install missing packages from external repository
+#
+yum localinstall -y externals/CentOS_6/x86_64/*.rpm
+
+
+#
+# Configure karoo automake environment 
+#
+autoreconf -if
+cd $BUILD_DIR
+../../configure --prefix=`pwd`/build
+
+
+

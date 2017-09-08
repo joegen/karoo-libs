@@ -1,0 +1,242 @@
+Name: @PACKAGE@
+Version: 2.0.3
+Release: 4
+Summary: Library dependencies for Karoo Bridge
+License: OSS Commercial License
+Group: Development/Libraries
+Vendor: OSS Software Solutions
+Url: http://www.ossapp.com
+Source: %name-%version.tar.gz
+Prefix: %_prefix
+BuildRoot: %{_tmppath}/%name-%version-root
+
+#
+# Skip all the commands in os_install_post except brp-compress
+# This will effectively disable all calls to brp-strip which strips the debug symbols
+#
+%define __os_install_post /usr/lib/rpm/brp-compress
+%define __strip /bin/true
+%global _enable_debug_package 0
+%global debug_package %{nil}
+
+#
+# Required packages by oss_core
+#
+BuildRequires: asio-devel
+BuildRequires: automake
+BuildRequires: autoconf
+BuildRequires: cmake
+BuildRequires: bison
+BuildRequires: boost-devel
+BuildRequires: c-ares-devel
+BuildRequires: asio-devel
+BuildRequires: cppunit-devel
+BuildRequires: curl-devel
+%if 0%{?fedora} >= 18
+BuildRequires: db4-cxx-devel
+%endif
+BuildRequires: db4-devel
+BuildRequires: findutils
+BuildRequires: gcc-c++
+BuildRequires: gdbm-devel
+BuildRequires: gperf
+BuildRequires: gtest-devel
+BuildRequires: hiredis-devel
+BuildRequires: iproute
+BuildRequires: iptables
+BuildRequires: libconfig-devel
+BuildRequires: libdnet-devel
+BuildRequires: libevent-devel
+BuildRequires: libmcrypt-devel
+BuildRequires: libpcap-devel
+BuildRequires: libtool >= 1.5.17
+BuildRequires: libtool-ltdl-devel
+BuildRequires: libxml2-devel
+BuildRequires: mysql-devel
+BuildRequires: openssl-devel >= 0.9.8
+BuildRequires: pcre-devel
+BuildRequires: perl
+BuildRequires: perl-ExtUtils-Embed
+BuildRequires: pkgconfig
+BuildRequires: popt-devel
+BuildRequires: python-devel
+BuildRequires: unixODBC-devel
+BuildRequires: v8-devel
+BuildRequires: which
+BuildRequires: xerces-c-devel
+BuildRequires: xmlrpc-c-devel
+BuildRequires: zlib-devel
+BuildRequires: zeromq-devel
+BuildRequires: leveldb-devel
+BuildRequires: curl
+BuildRequires: sshpass
+BuildRequires: createrepo
+BuildRequires: npm
+
+
+Requires: boost
+Requires: c-ares
+Requires: curl
+Requires: db4
+Requires: gdbm
+Requires: gtest
+Requires: hiredis
+Requires: ldns
+Requires: libconfig
+Requires: libdnet
+Requires: libevent
+Requires: libjpeg
+Requires: libmcrypt
+Requires: libogg
+Requires: libpcap
+Requires: libtheora
+Requires: libtiff
+Requires: libtool-ltdl
+Requires: libvorbis
+Requires: libxml2
+Requires: ncurses
+Requires: openssl >= 0.9.7a
+Requires: pcre >= 4.5
+
+BuildRequires: poco-devel
+Requires: poco-foundation
+Requires: poco-net
+Requires: poco-netssl
+Requires: poco-util
+Requires: poco-xml
+#Requires: poco-zip
+#Requires: poco-crypto
+#Requires: poco-data
+#Requires: poco-odbc
+#Requires: poco-pagecompiler
+#Requires: poco-sqlite
+#Requires: poco-mysql
+
+Obsoletes: ptlib-devel
+Obsoletes: ptlib
+Obsoletes: opal-devel
+Obsoletes: opal
+Provides: libopal.so.3.16.2()(64bit)
+
+Requires: python
+Requires: speex
+Requires: unixODBC
+Requires: v8
+Requires: xmlrpc-c
+Requires: xmlrpc-c-c++
+Requires: xmlrpc-c-client
+Requires: xmlrpc-c-client++
+Requires: zlib
+Requires: zeromq
+Requires: leveldb
+Requires: redis
+Requires: net-tools
+Requires: yum-utils
+Requires: lighttpd
+Requires: nodejs
+Requires: npm
+
+
+
+%description
+The Karoo Bridge libraries
+
+# Install header files
+%package devel
+Requires: %name
+Group: Development/Libraries
+Vendor: OSS
+Summary: Header files for %name
+
+
+%description devel
+The Karoo Bridge libraries and applications
+
+%prep
+%setup -q
+
+%build
+autoreconf -if
+%configure
+
+%install
+make DESTDIR=$RPM_BUILD_ROOT libs-install
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%files
+%defattr(644,root,root,755)
+
+#
+# OPAL files
+#
+%{_libdir}/libpt.so*
+%{_libdir}/libopal.so*
+%{_libdir}/pkgconfig/ptlib.pc
+%{_libdir}/pkgconfig/opal.pc
+
+%dir %attr(755,root,root) %{_libdir}/ptlib-2.16.2
+%{_libdir}/ptlib-2.16.2/*
+
+%dir %attr(755,root,root) %{_libdir}/opal-3.16.2
+%{_libdir}/opal-3.16.2/*
+
+#
+# Resiprocate Files
+#
+%{_libdir}/librutil*.so*
+%{_libdir}/librutil.la
+%{_libdir}/libdum*.so*
+%{_libdir}/libdum.la
+%{_libdir}/libresip*.so*
+%{_libdir}/libresip.la
+%{_libdir}/libresipares.la
+
+
+#
+# Development package
+#
+%files devel
+%defattr(644,root,root,755)
+
+#
+# Opal Files
+#
+%{_libdir}/libpt*.a
+%{_libdir}/libopal*.a
+
+
+/usr/include/ptlib*.h
+
+%dir %attr(755,root,root) /usr/include/ptlib
+/usr/include/ptlib/*
+
+%dir %attr(755,root,root) /usr/include/ptlib
+/usr/include/ptclib/*
+
+%dir %attr(755,root,root) /usr/include/opal
+/usr/include/opal/*
+
+%dir %attr(755,root,root) /usr/share/ptlib
+/usr/share/ptlib/*
+
+%dir %attr(755,root,root) /usr/share/opal
+/usr/share/opal/*
+
+#
+# Resiprocate files
+#
+%{_libdir}/libdum.a
+%{_libdir}/libresip.a
+%{_libdir}/libresipares.a
+%{_libdir}/librutil.a
+/usr/share/man/man3/ares_*
+%dir %attr(755,root,root) /usr/include/resip
+/usr/include/resip/*
+%dir %attr(755,root,root) /usr/include/rutil
+/usr/include/rutil/*
+
+
+
+

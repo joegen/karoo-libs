@@ -1,0 +1,13 @@
+#!/bin/sh
+DOCKER=joegen/karoo-builder-rel7
+BUILD=.build
+
+mkdir -p ${BUILD}
+echo `pwd` > ${BUILD}/.topsrc
+
+docker pull ${DOCKER}
+docker kill oss-karoo-builder 2>/dev/null
+docker rm oss-karoo-builder 2>/dev/null
+docker run -it --rm --name oss-karoo-builder  -v `pwd`:/BUILDROOT \
+    ${DOCKER} \
+    /bin/sh -c "cd /BUILDROOT && ./docker-configure";

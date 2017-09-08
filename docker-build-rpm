@@ -1,0 +1,52 @@
+#!/bin/bash
+
+#
+# This script is called from docker-build rule and must not be called outside of a docker container
+#
+
+
+#
+# Update packages
+#
+yum update -y
+
+PACKAGE_NAME=karoo-libs
+
+#
+# Configure the docker volume build-root directory
+#
+cd /BUILDROOT
+
+#
+# install missing packages (centos 6 only) from external repository
+#
+#yum localinstall -y externals/CentOS_6/x86_64/*.rpm
+
+#
+# Create the build directory
+#
+BUILD_DIR=/BUILDHOME/Devel/docker-build-root/${PACKAGE_NAME}
+rm -rf $BUILD_DIR
+mkdir -p $BUILD_DIR
+
+#
+# Add github to known hosts
+#
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+ssh-keyscan github.com >> ~/.ssh/known_hosts
+chmod 644 ~/.ssh/known_hosts
+
+#
+# Configure karoo automake environment 
+#
+cd $BUILD_DIR
+/BUILDROOT/configure --prefix=`pwd`/build
+
+#
+# Build the RPM
+#
+export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib/pkgconfig
+make rpm
+yum install -y RPMBUILD/RPMS/x86_64/oss_karoo_bridge_libs*.rpm
+

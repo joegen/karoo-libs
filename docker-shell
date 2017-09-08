@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DOCKER=joegen/karoo-builder-rel7
+
+docker kill oss-karoo-builder 2>/dev/null
+docker rm oss-karoo-builder 2>/dev/null
+docker run -it --rm --name oss-karoo-builder  -v `pwd`:/BUILDROOT -v ${HOME}:/BUILDHOME ${DOCKER} /bin/bash

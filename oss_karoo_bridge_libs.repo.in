@@ -1,0 +1,4 @@
+[oss_karoo_libs]
+name=Karoo Bridge Repository for Centos $releasever - $basearch
+baseurl=http://www.ossapp.com/karoo-libs/@PACKAGE_VERSION@/CentOS_$releasever/$basearch
+gpgcheck=0

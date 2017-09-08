@@ -1,0 +1,127 @@
+#
+# Docker container for building Karoo packages
+#
+
+FROM centos:centos7
+MAINTAINER Joegen Baclor <joegen@ossapp.com>
+
+ADD oss_karoo_bridge_libs.repo /etc/yum.repos.d
+
+#
+# Install EPEL repository
+#
+RUN yum -y update; yum -y install epel-release; yum clean all; yum -y --disablerepo=epel update  ca-certificates
+
+#
+# Install Dependency Package
+#
+
+RUN yum -y install \
+    asio-devel \
+    automake \
+    autoconf \
+    bison \
+    bind-utils \
+    bzip2-devel \
+    boost-devel \
+    chrpath \
+    c-ares-devel \
+    cmake \
+    cppunit-devel \
+    createrepo \
+    db4-devel \
+    elfutils-devel \
+    elfutils-libelf-devel \
+    findutils \
+    flex \
+    gcc-c++ \
+    git \
+    gperf \     
+    gperftools-devel \
+    gtest-devel \
+    hiredis-devel \
+    httpd-devel \
+    iproute \
+    iptables \
+    leveldb-devel \
+    libacl-devel \
+    libconfig-devel \
+    libdnet-devel \
+    libevent-devel \
+    libmcrypt-devel \
+    libpcap-devel \
+    libtool \
+    libtool-ltdl \
+    libtool-ltdl-devel \
+    libselinux-devel \
+    libsrtp-devel \
+    libtool \
+    libtool-ltdl-devel \
+    lksctp-tools-devel \
+    lm_sensors-devel \
+    m4 \
+    mongoose \
+    mysql-devel \
+    net-tools \
+    openssh-clients \
+    openssl-devel \
+    patch \
+    pcre-devel \
+    perl \
+    perl-devel \
+    perl-TAP-Harness-Archive \
+    perl-TAP-Harness-JUnit \
+    perl-ExtUtils-Embed \
+    postgresql-devel \
+    poco-devel \
+    python-devel \
+    python-setuptools \
+    rpm-build \
+    rpm-devel \
+    ruby \
+    ruby-devel \
+    rubygem-mocha \
+    rubygem-rake \
+    rubygems \
+    shadow-utils \
+    scons \
+    tar \
+    tcp_wrappers-devel \
+    tetex-dvips \
+    texinfo-tex \
+    tokyocabinet-devel \
+    unixODBC-devel \
+    vixie-cron \
+    v8-devel \
+    which \
+    xerces-c-devel \
+    xmlrpc-c-devel \
+    zeromq-devel \
+    zip \
+    mysql-devel \
+    libogg-devel \
+    vorbis-tools \
+    libvorbis-devel \
+    libpcap-devel \
+    zlib-devel \
+    rrdtool-devel \
+    json-c-devel \
+    fftw-devel \
+    snappy-devel \
+    curl \
+    sshpass \
+    createrepo \
+    npm \
+    nodejs \
+    oss_karoo_bridge_libs \
+    oss_karoo_bridge_libs-devel
+
+#
+# Install npm based global package
+#
+RUN npm install -g gulp-cli
+
+#
+# Clean up
+#
+RUN yum clean all

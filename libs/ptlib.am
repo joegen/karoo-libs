@@ -1,0 +1,64 @@
+PTLIB_DIR = $(shell pwd)/libs-build-root/ptlib
+PTLIB_DIR_LOCAL = $(shell pwd)/libs-build-root/ptlib-local
+PTLIB_CHECKSUM_FILE = ptlib.checksum
+PTLIB_NEW_CHECKSUM = `find ${top_srcdir}/libs/ptlib -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
+PTLIB_OLD_CHECKSUM = `touch ${PTLIB_CHECKSUM_FILE}; cat ptlib.checksum | awk '{print $$1}'`
+
+
+ptlib-install-local:
+	@if [ x${PTLIB_NEW_CHECKSUM} == x${PTLIB_OLD_CHECKSUM} ]; then \
+	    echo "PTLIB source is up to date"; \
+	else \
+	    echo "PTLIB source changed"; \
+	    echo ${PTLIB_NEW_CHECKSUM} > ${PTLIB_CHECKSUM_FILE}; \
+	    rm -rf ${PTLIB_DIR_LOCAL}; \
+	    mkdir -p ${PTLIB_DIR_LOCAL}; \
+	    cp -rpP ${top_srcdir}/libs/ptlib/* ${PTLIB_DIR_LOCAL}/; \
+	    cd ${PTLIB_DIR_LOCAL} && ./configure \
+	    --prefix=${BUILD_DIR} \
+	    --enable-exceptions; \
+	fi
+	cd ${PTLIB_DIR_LOCAL} && make && make install;
+
+ptlib-install:
+	rm -rf ${PTLIB_DIR}
+	mkdir -p ${PTLIB_DIR}
+	cp -rpP ${top_srcdir}/libs/ptlib/* ${PTLIB_DIR}/
+	cd ${PTLIB_DIR} && ./configure \
+	    --prefix=/usr \
+	    --exec-prefix=/usr \
+	    --bindir=/usr/bin \
+	    --sbindir=/usr/sbin \
+	    --sysconfdir=/etc \
+	    --datadir=/usr/share \
+	    --includedir=/usr/include \
+	    --libdir=/usr/lib64 \
+	    --libexecdir=/usr/libexec \
+	    --localstatedir=/var \
+	    --sharedstatedir=/var/lib \
+	    --mandir=/usr/share/man \
+	    --infodir=/usr/share/info \
+	    --enable-exceptions
+	cd ${PTLIB_DIR} && make opt && make install
+
+
+ptlib-install-dev:
+	rm -rf ${PTLIB_DIR}
+	mkdir -p ${PTLIB_DIR}
+	cp -rpP ${top_srcdir}/libs/ptlib/* ${PTLIB_DIR}/
+	cd ${PTLIB_DIR} && ./configure \
+	    --prefix=/usr \
+	    --exec-prefix=/usr \
+	    --bindir=/usr/bin \
+	    --sbindir=/usr/sbin \
+	    --sysconfdir=/etc \
+	    --datadir=/usr/share \
+	    --includedir=/usr/include \
+	    --libdir=/usr/lib \
+	    --libexecdir=/usr/libexec \
+	    --localstatedir=/var \
+	    --sharedstatedir=/var/lib \
+	    --mandir=/usr/share/man \
+	    --infodir=/usr/share/info \
+	    --enable-exceptions
+	cd ${PTLIB_DIR} && make opt && make install

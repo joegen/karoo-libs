@@ -1,0 +1,9 @@
+[submodule "libs/ptlib"]
+	path = libs/ptlib
+	url = https://github.com/joegen/opalvoip-ptlib
+[submodule "libs/opal"]
+	path = libs/opal
+	url = https://github.com/joegen/opalvoip-opal
+[submodule "libs/resiprocate"]
+	path = libs/resiprocate
+	url = https://github.com/resiprocate/resiprocate.git
