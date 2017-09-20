@@ -1,0 +1,38 @@
+NODE_DIR = $(shell pwd)/libs-build-root/node
+NODE_DIR_LOCAL = $(shell pwd)/libs-build-root/node-local
+NODE_CHECKSUM_FILE = node.checksum
+NODE_NEW_CHECKSUM = `find ${top_srcdir}/apps/node -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
+NODE_OLD_CHECKSUM = `touch ${NODE_CHECKSUM_FILE}; cat node.checksum | awk '{print $$1}'`
+
+
+node-install-local:
+	@if [ x${NODE_NEW_CHECKSUM} == x${NODE_OLD_CHECKSUM} ]; then \
+	    echo "NODE source is up to date"; \
+	else \
+	    echo "NODE source changed"; \
+	    echo ${NODE_NEW_CHECKSUM} > ${NODE_CHECKSUM_FILE}; \
+	    rm -rf ${NODE_DIR_LOCAL}; \
+	    mkdir -p ${NODE_DIR_LOCAL}; \
+	    cp -rpP ${top_srcdir}/apps/node/* ${NODE_DIR_LOCAL}/; \
+	    cd ${NODE_DIR_LOCAL} && ./configure \
+	    --prefix=${APP_BUILD_DIR}; \
+	fi
+	cd ${NODE_DIR_LOCAL} && make && make install;
+
+node-install-dev:
+	@if [ x${NODE_NEW_CHECKSUM} == x${NODE_OLD_CHECKSUM} ]; then \
+	    echo "NODE source is up to date"; \
+	else \
+	    echo "NODE source changed"; \
+	    echo ${NODE_NEW_CHECKSUM} > ${NODE_CHECKSUM_FILE}; \
+	    rm -rf ${NODE_DIR}; \
+	    mkdir -p ${NODE_DIR}; \
+	    cp -rpP ${top_srcdir}/apps/node/* ${NODE_DIR}/; \
+	    cd ${NODE_DIR} && ./configure \
+	    --prefix=/usr; \
+	fi
+	cd ${NODE_DIR} && make && make install;
+
+
+
+node-install: node-install-dev

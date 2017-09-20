@@ -1,4 +1,4 @@
-.DEFAULT_GOAL := libs-install-local
+.DEFAULT_GOAL := local-install
 
 include config/utility.am
 
@@ -6,16 +6,24 @@ DOCKER = joegen/karoo-builder-rel7
 PROJECTVER=@PACKAGE_VERSION@
 DISTRO=x86_64
 BASE_IMAGE=CentOS_7
-REPOHOST = ossapp.com
-REPOUSER = ossappco
+
 PACKAGE_NAME = karoo-libs
 REPO_FILE = oss_karoo_bridge_libs.repo
 
+REPOHOST = ossapp.com
+REPOUSER = ossappco
 WWWROOT = /home5/ossappco/public_html
+SSH_PASS = sshpass -p `cat .sshpass`
+
+#REPOHOST = vmpool.gobitech.local
+#REPOUSER = root
+#SSH_PASS = 
+#WWWROOT = /var/www/html
+
 WWWREPOBASE = ${WWWROOT}/${PACKAGE_NAME}/${PROJECTVER}
 WWWREPOPATH = ${WWWREPOBASE}/${BASE_IMAGE}/${DISTRO}
 RPMPATH = ${HOME}/Devel/docker-build-root/${PACKAGE_NAME}/RPMBUILD/RPMS/${DISTRO}
-SSH_PASS = sshpass -p `cat .sshpass`
+
 SSH_OPTIONS = -v -o UserKnownHostsFile=./.known_hosts -o StrictHostKeyChecking=no
 SCP_RPM_PARAMS = ${RPMPATH}/* ${REPOUSER}@${REPOHOST}:${WWWREPOPATH}
 SCP_REPOFILE_PARAMS = ${REPO_FILE} ${REPOUSER}@${REPOHOST}:${WWWREPOBASE}
@@ -42,10 +50,15 @@ EXTRA_DIST = \
 	$(@PACKAGE@_EXTRA_DIST)
 
 include libs/libs.am
+include apps/apps.am
+local-install: libs-install-local apps-install-local
+install:  libs-install apps-install
 
 dist-hook: @PACKAGE@-dist-revision @PACKAGE@-dist-specfile
 	cp -rPp ${top_srcdir}/libs $(distdir)
+	cp -rPp ${top_srcdir}/apps $(distdir)
 	cd $(distdir)/libs && find . -name "*.spec" -print0 | xargs -0 rm -f
+	cd $(distdir)/apps && find . -name "*.spec" -print0 | xargs -0 rm -f
 
 %-dist-revision :
 	echo $(PACKAGE_REVISION) > $(distdir)/.tarball-revision

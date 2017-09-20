@@ -7,9 +7,8 @@ include libs/resiprocate.am
 libs-install-local: resiprocate-install-local ptlib-install-local opal-install-local
 
 libs-install-dev: resip-install-dev ptlib-install-dev opal-install-dev
-	rm -rf $(BUILD_DIR)/libs-build-root
 
 libs-install: resip-install ptlib-install opal-install
-	rm -rf $(BUILD_DIR)/libs-build-root
+
 
 

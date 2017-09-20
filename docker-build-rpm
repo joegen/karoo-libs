@@ -46,7 +46,18 @@ cd $BUILD_DIR
 #
 # Build the RPM
 #
+yum install -y expat-devel \
+    flex-devel \
+    libuv-devel
+yum install -y oss_karoo_bridge_libs-devel
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib/pkgconfig
 make rpm
-yum install -y RPMBUILD/RPMS/x86_64/oss_karoo_bridge_libs*.rpm
+yum remove -y oss_karoo_bridge_libs* nodejs npm
+yum install -y RPMBUILD/RPMS/x86_64/oss_karoo_bridge_libs*.rpm && \
+    node --version && \
+    npm --version && \
+    npm install -g gulp-cli minifier
+
+
+
 

@@ -1,6 +1,6 @@
 Name: @PACKAGE@
 Version: 2.0.3
-Release: 4
+Release: 14
 Summary: Library dependencies for Karoo Bridge
 License: OSS Commercial License
 Group: Development/Libraries
@@ -71,7 +71,10 @@ BuildRequires: leveldb-devel
 BuildRequires: curl
 BuildRequires: sshpass
 BuildRequires: createrepo
-BuildRequires: npm
+BuildRequires: http-parser-devel
+BuildRequires: expat-devel
+BuildRequires: flex-devel
+BuildRequires: libuv-devel
 
 
 Requires: boost
@@ -116,7 +119,9 @@ Obsoletes: ptlib-devel
 Obsoletes: ptlib
 Obsoletes: opal-devel
 Obsoletes: opal
-Provides: libopal.so.3.16.2()(64bit)
+Obsoletes: npm
+Obsoletes: nodejs
+Provides: libopal.so.3.17-alpha5()(64bit)
 
 Requires: python
 Requires: speex
@@ -133,8 +138,10 @@ Requires: redis
 Requires: net-tools
 Requires: yum-utils
 Requires: lighttpd
-Requires: nodejs
-Requires: npm
+Requires: http-parser
+Requires: expat
+Requires: flex
+Requires: libuv
 
 
 
@@ -160,7 +167,7 @@ autoreconf -if
 %configure
 
 %install
-make DESTDIR=$RPM_BUILD_ROOT libs-install
+make DESTDIR=$RPM_BUILD_ROOT install
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -176,11 +183,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/ptlib.pc
 %{_libdir}/pkgconfig/opal.pc
 
-%dir %attr(755,root,root) %{_libdir}/ptlib-2.16.2
-%{_libdir}/ptlib-2.16.2/*
+%dir %attr(755,root,root) %{_libdir}/ptlib-2.17.4
+%{_libdir}/ptlib-2.17.4/*
 
-%dir %attr(755,root,root) %{_libdir}/opal-3.16.2
-%{_libdir}/opal-3.16.2/*
+%dir %attr(755,root,root) %{_libdir}/opal-3.17.5
+%{_libdir}/opal-3.17.5/*
 
 #
 # Resiprocate Files
@@ -193,6 +200,30 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libresip.la
 %{_libdir}/libresipares.la
 
+#
+# NodeJS files
+#
+%dir %attr(755,root,root) /usr/lib/node_modules
+/usr/lib/node_modules/*
+%attr(755,root,root) %{_bindir}/node
+%{_bindir}/npm
+
+%dir %attr(755,root,root) /usr/share/doc/node/
+/usr/share/doc/node/*
+
+/usr/share/man/man1/node.1.gz
+/usr/share/systemtap/tapset/node.stp
+
+#
+# CaptAgent files
+#
+%dir %attr(755,root,root) %{_sysconfdir}/captagent
+%{_sysconfdir}/captagent/*
+
+%dir %attr(755,root,root) %{_libdir}/captagent
+%{_libdir}/captagent/*
+
+%attr(755,root,root) %{_sbindir}/captagent
 
 #
 # Development package
@@ -212,7 +243,7 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(755,root,root) /usr/include/ptlib
 /usr/include/ptlib/*
 
-%dir %attr(755,root,root) /usr/include/ptlib
+%dir %attr(755,root,root) /usr/include/ptclib
 /usr/include/ptclib/*
 
 %dir %attr(755,root,root) /usr/include/opal
@@ -237,6 +268,13 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(755,root,root) /usr/include/rutil
 /usr/include/rutil/*
 
+#
+# NodeJS files
+#
+%dir %attr(755,root,root) /usr/include/node
+/usr/include/node/*
 
+%post
+chmod +x %{_bindir}/npm
 
 

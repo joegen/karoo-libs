@@ -7,3 +7,9 @@
 [submodule "libs/resiprocate"]
 	path = libs/resiprocate
 	url = https://github.com/resiprocate/resiprocate.git
+[submodule "apps/node"]
+	path = apps/node
+	url = https://github.com/nodejs/node
+[submodule "apps/captagent"]
+	path = apps/captagent
+	url = https://github.com/sipcapture/captagent.git

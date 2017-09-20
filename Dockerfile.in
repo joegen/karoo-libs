@@ -111,15 +111,15 @@ RUN yum -y install \
     curl \
     sshpass \
     createrepo \
-    npm \
-    nodejs \
-    oss_karoo_bridge_libs \
-    oss_karoo_bridge_libs-devel
+    http-parser-devel \
+    expat-devel \
+    flex-devel \
+    libuv-devel
 
 #
 # Install npm based global package
 #
-RUN npm install -g gulp-cli
+# RUN npm install -g gulp-cli minifier
 
 #
 # Clean up
