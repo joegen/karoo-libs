@@ -53,6 +53,8 @@ include libs/libs.am
 include apps/apps.am
 local-install: libs-install-local apps-install-local
 install:  libs-install apps-install
+install-dev: libs-install-dev apps-install-dev
+	
 
 dist-hook: @PACKAGE@-dist-revision @PACKAGE@-dist-specfile
 	cp -rPp ${top_srcdir}/libs $(distdir)

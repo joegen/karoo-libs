@@ -13,3 +13,6 @@
 [submodule "apps/captagent"]
 	path = apps/captagent
 	url = https://github.com/sipcapture/captagent.git
+[submodule "apps/sniffer"]
+	path = apps/sniffer
+	url = https://github.com/voipmonitor/sniffer
