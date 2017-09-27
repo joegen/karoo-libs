@@ -1,8 +1,9 @@
 PTLIB_DIR = $(shell pwd)/libs-build-root/ptlib
 PTLIB_DIR_LOCAL = $(shell pwd)/libs-build-root/ptlib-local
 PTLIB_CHECKSUM_FILE = ptlib.checksum
-PTLIB_NEW_CHECKSUM = `find ${top_srcdir}/libs/ptlib -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
 PTLIB_OLD_CHECKSUM = `touch ${PTLIB_CHECKSUM_FILE}; cat ptlib.checksum | awk '{print $$1}'`
+PTLIB_NEW_CHECKSUM = `find ${top_srcdir}/libs/ptlib -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
+
 
 
 ptlib-install-local:
@@ -25,19 +26,19 @@ ptlib-install:
 	mkdir -p ${PTLIB_DIR}
 	cp -rpP ${top_srcdir}/libs/ptlib/* ${PTLIB_DIR}/
 	cd ${PTLIB_DIR} && ./configure \
-	    --prefix=/usr \
-	    --exec-prefix=/usr \
-	    --bindir=/usr/bin \
-	    --sbindir=/usr/sbin \
-	    --sysconfdir=/etc \
-	    --datadir=/usr/share \
-	    --includedir=/usr/include \
-	    --libdir=/usr/lib64 \
-	    --libexecdir=/usr/libexec \
-	    --localstatedir=/var \
-	    --sharedstatedir=/var/lib \
-	    --mandir=/usr/share/man \
-	    --infodir=/usr/share/info \
+	    --prefix=${prefix} \
+	    --exec-prefix=${exec_prefix} \
+	    --bindir=${bindir} \
+	    --sbindir=${sbindir} \
+	    --sysconfdir=${sysconfdir} \
+	    --datadir=${datadir} \
+	    --includedir=${includedir} \
+	    --libdir=${libdir} \
+	    --libexecdir=${libexecdir} \
+	    --localstatedir=${localstatedir} \
+	    --sharedstatedir=${sharedstatedir} \
+	    --mandir=${mandir} \
+	    --infodir=${infodir} \
 	    --enable-exceptions
 	cd ${PTLIB_DIR} && make opt && make install
 

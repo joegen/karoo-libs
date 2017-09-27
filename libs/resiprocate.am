@@ -1,8 +1,9 @@
 RESIP_DIR = $(shell pwd)/libs-build-root/resiprocate
 RESIP_DIR_LOCAL = $(shell pwd)/libs-build-root/resiprocate-local
 RESIP_CHECKSUM_FILE = resiprocate.checksum
-RESIP_NEW_CHECKSUM = `find ${top_srcdir}/libs/resiprocate -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
 RESIP_OLD_CHECKSUM = `touch ${RESIP_CHECKSUM_FILE}; cat resiprocate.checksum | awk '{print $$1}'`
+RESIP_NEW_CHECKSUM = `find ${top_srcdir}/libs/resiprocate -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
+
 
 
 resiprocate-install-local:
@@ -24,19 +25,19 @@ resip-install:
 	mkdir -p ${RESIP_DIR}
 	cp -rpP ${top_srcdir}/libs/resiprocate/* ${RESIP_DIR}/
 	cd ${RESIP_DIR} && autoreconf -if && ./configure \
-	    --prefix=/usr \
-	    --exec-prefix=/usr \
-	    --bindir=/usr/bin \
-	    --sbindir=/usr/sbin \
-	    --sysconfdir=/etc \
-	    --datadir=/usr/share \
-	    --includedir=/usr/include \
-	    --libdir=/usr/lib64 \
-	    --libexecdir=/usr/libexec \
-	    --localstatedir=/var \
-	    --sharedstatedir=/var/lib \
-	    --mandir=/usr/share/man \
-	    --infodir=/usr/share/info
+	    --prefix=${prefix} \
+	    --exec-prefix=${exec_prefix} \
+	    --bindir=${bindir} \
+	    --sbindir=${sbindir} \
+	    --sysconfdir=${sysconfdir} \
+	    --datadir=${datadir} \
+	    --includedir=${includedir} \
+	    --libdir=${libdir} \
+	    --libexecdir=${libexecdir} \
+	    --localstatedir=${localstatedir} \
+	    --sharedstatedir=${sharedstatedir} \
+	    --mandir=${mandir} \
+	    --infodir=${infodir}
 	cd ${RESIP_DIR} && make
 	cd ${RESIP_DIR} && make install
 

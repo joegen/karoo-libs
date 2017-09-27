@@ -1,0 +1,22 @@
+#!/usr/bin/make -f
+
+DEB_BUILD_MAINT_OPTIONS = hardening=+all
+
+
+DEB_DH_INSTALL_ARGS := --sourcedir=debian/tmp
+
+
+override_dh_auto_build:
+	dh_auto_build --parallel
+
+# let the test cases run
+override_dh_auto_test:
+	/bin/true
+
+override_dh_clean:
+	/bin/true
+
+# force building in the pkgroot or it won't build
+%:
+	dh $@ --with autoreconf --builddirectory=.
+

@@ -1,8 +1,9 @@
 OPAL_DIR = $(shell pwd)/libs-build-root/opal
 OPAL_DIR_LOCAL = $(shell pwd)/libs-build-root/opal-local
 OPAL_CHECKSUM_FILE = opal.checksum
-OPAL_NEW_CHECKSUM = `find ${top_srcdir}/libs/opal -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
 OPAL_OLD_CHECKSUM = `touch ${OPAL_CHECKSUM_FILE}; cat opal.checksum | awk '{print $$1}'`
+OPAL_NEW_CHECKSUM = `find ${top_srcdir}/libs/opal -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
+
 
 
 opal-install-local:
@@ -28,19 +29,19 @@ opal-install:
 	cp -rpP ${top_srcdir}/libs/opal/* ${OPAL_DIR}/
 	cd ${OPAL_DIR}/plugins/audio/G.722.1/libg722_1 && autoreconf -if
 	cd ${OPAL_DIR} && ./configure --enable-localsrtp \
-	    --prefix=/usr \
-	    --exec-prefix=/usr \
-	    --bindir=/usr/bin \
-	    --sbindir=/usr/sbin \
-	    --sysconfdir=/etc \
-	    --datadir=/usr/share \
-	    --includedir=/usr/include \
-	    --libdir=/usr/lib64 \
-	    --libexecdir=/usr/libexec \
-	    --localstatedir=/var \
-	    --sharedstatedir=/var/lib \
-	    --mandir=/usr/share/man \
-	    --infodir=/usr/share/info \
+	    --prefix=${prefix} \
+	    --exec-prefix=${exec_prefix} \
+	    --bindir=${bindir} \
+	    --sbindir=${sbindir} \
+	    --sysconfdir=${sysconfdir} \
+	    --datadir=${datadir} \
+	    --includedir=${includedir} \
+	    --libdir=${libdir} \
+	    --libexecdir=${libexecdir} \
+	    --localstatedir=${localstatedir} \
+	    --sharedstatedir=${sharedstatedir} \
+	    --mandir=${mandir} \
+	    --infodir=${infodir} \
 	    --disable-iax2 \
 	    --disable-skinny
 	cd ${OPAL_DIR} && PTLIBDIR=${PTLIB_DIR} make opt

@@ -59,6 +59,7 @@ install-dev: libs-install-dev apps-install-dev
 dist-hook: @PACKAGE@-dist-revision @PACKAGE@-dist-specfile
 	cp -rPp ${top_srcdir}/libs $(distdir)
 	cp -rPp ${top_srcdir}/apps $(distdir)
+	cp -rPp ${top_srcdir}/debian $(distdir)
 	cd $(distdir)/libs && find . -name "*.spec" -print0 | xargs -0 rm -f
 	cd $(distdir)/apps && find . -name "*.spec" -print0 | xargs -0 rm -f
 
@@ -132,4 +133,13 @@ deploy: top-src
 	if [[ $$? -ne 0 ]]; then \
 		exit 1; \
 	fi;
+
+clean:
+	rm -rf oss_karoo_bridge_libs-*
+	rm -rf *.checksum > /dev/null
+	rm -rf libs-build-root > /dev/null
+
+deb: clean dist
+	tar -xvf oss_karoo_bridge_libs-*.tar.gz
+	cd oss_karoo_bridge_libs-* && fakeroot dpkg-buildpackage -b -uc
 

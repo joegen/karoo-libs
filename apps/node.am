@@ -1,8 +1,9 @@
 NODE_DIR = $(shell pwd)/libs-build-root/node
 NODE_DIR_LOCAL = $(shell pwd)/libs-build-root/node-local
 NODE_CHECKSUM_FILE = node.checksum
-NODE_NEW_CHECKSUM = `find ${top_srcdir}/apps/node -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
 NODE_OLD_CHECKSUM = `touch ${NODE_CHECKSUM_FILE}; cat node.checksum | awk '{print $$1}'`
+NODE_NEW_CHECKSUM = `find ${top_srcdir}/apps/node -type f -name "*.*" -exec md5sum {} + | awk '{print $$1}' | sort | md5sum | awk '{print $$1}'`
+
 
 
 node-install-local:
@@ -35,4 +36,10 @@ node-install-dev:
 
 
 
-node-install: node-install-dev
+node-install:
+	rm -rf ${NODE_DIR}; \
+	mkdir -p ${NODE_DIR}; \
+	cp -rpP ${top_srcdir}/apps/node/* ${NODE_DIR}/; \
+	cd ${NODE_DIR} && ./configure \
+	    --prefix=/usr;
+	cd ${NODE_DIR} && make && make install;

@@ -1,0 +1,49 @@
+#
+# OPAL files
+#
+/usr/lib/*/libpt.so*
+/usr/lib/*/libopal.so*
+/usr/lib/*/pkgconfig/ptlib.pc
+/usr/lib/*/pkgconfig/opal.pc
+
+/usr/lib/*/ptlib-2.17.4
+/usr/lib/*/ptlib-2.17.4/*
+
+/usr/lib/*/opal-3.17.5
+/usr/lib/*/opal-3.17.5/*
+
+#
+# Resiprocate Files
+#
+/usr/lib/*/librutil*.so*
+/usr/lib/*/librutil.la
+/usr/lib/*/libdum*.so*
+/usr/lib/*/libdum.la
+/usr/lib/*/libresip*.so*
+/usr/lib/*/libresip.la
+/usr/lib/*/libresipares.la
+
+#
+# NodeJS files
+#
+/usr/lib/node_modules
+/usr/lib/node_modules/*
+/usr/bin/node
+/usr/bin/npm
+
+/usr/share/doc/node/
+/usr/share/doc/node/*
+
+/usr/share/man/man1/node.*
+/usr/share/systemtap/tapset/node.stp
+
+#
+# CaptAgent files
+#
+/etc/captagent
+/etc/captagent/*
+
+/usr/lib/*/captagent
+/usr/lib/*/captagent/*
+
+/usr/sbin/captagent
