@@ -119,8 +119,6 @@ Obsoletes: ptlib-devel
 Obsoletes: ptlib
 Obsoletes: opal-devel
 Obsoletes: opal
-Obsoletes: npm
-Obsoletes: nodejs
 Provides: libopal.so.3.17-alpha5()(64bit)
 
 Requires: python

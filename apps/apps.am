@@ -1,8 +1,7 @@
 APP_BUILD_DIR =  $(shell pwd)
 
-include apps/node.am
 include apps/captagent.am
 
-apps-install-local: node-install-local captagent-install-local
-apps-install-dev: node-install-dev captagent-install-dev
-apps-install: node-install captagent-install
+apps-install-local: captagent-install-local
+apps-install-dev: captagent-install-dev
+apps-install: captagent-install

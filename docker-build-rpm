@@ -52,11 +52,8 @@ yum install -y expat-devel \
 yum install -y oss_karoo_bridge_libs-devel
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib/pkgconfig
 make rpm
-yum remove -y oss_karoo_bridge_libs* nodejs npm
-yum install -y RPMBUILD/RPMS/x86_64/oss_karoo_bridge_libs*.rpm && \
-    node --version && \
-    npm --version && \
-    npm install -g gulp-cli minifier
+yum remove -y oss_karoo_bridge_libs*
+yum install -y RPMBUILD/RPMS/x86_64/oss_karoo_bridge_libs*.rpm
 
 
 
