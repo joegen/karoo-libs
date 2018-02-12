@@ -49,8 +49,8 @@ cd $BUILD_DIR
 yum install -y expat-devel \
     flex-devel \
     libuv-devel
-yum install -y oss_karoo_bridge_libs-devel
 export PKG_CONFIG_PATH=/usr/lib/pkgconfig:/usr/lib64/pkgconfig:/usr/local/lib/pkgconfig
+make ptlib-install
 make rpm
 yum remove -y oss_karoo_bridge_libs*
 yum install -y RPMBUILD/RPMS/x86_64/oss_karoo_bridge_libs*.rpm

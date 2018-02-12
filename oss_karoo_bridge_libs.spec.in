@@ -198,19 +198,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/libresip.la
 %{_libdir}/libresipares.la
 
-#
-# NodeJS files
-#
-%dir %attr(755,root,root) /usr/lib/node_modules
-/usr/lib/node_modules/*
-%attr(755,root,root) %{_bindir}/node
-%{_bindir}/npm
-
-%dir %attr(755,root,root) /usr/share/doc/node/
-/usr/share/doc/node/*
-
-/usr/share/man/man1/node.1.gz
-/usr/share/systemtap/tapset/node.stp
 
 #
 # CaptAgent files
@@ -266,13 +253,5 @@ rm -rf $RPM_BUILD_ROOT
 %dir %attr(755,root,root) /usr/include/rutil
 /usr/include/rutil/*
 
-#
-# NodeJS files
-#
-%dir %attr(755,root,root) /usr/include/node
-/usr/include/node/*
-
-%post
-chmod +x %{_bindir}/npm
 
 
