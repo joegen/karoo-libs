@@ -1,6 +1,6 @@
 Name: @PACKAGE@
 Version: 2.0.3
-Release: 14
+Release: 16
 Summary: Library dependencies for Karoo Bridge
 License: OSS Commercial License
 Group: Development/Libraries
@@ -181,11 +181,11 @@ rm -rf $RPM_BUILD_ROOT
 %{_libdir}/pkgconfig/ptlib.pc
 %{_libdir}/pkgconfig/opal.pc
 
-%dir %attr(755,root,root) %{_libdir}/ptlib-2.17.4
-%{_libdir}/ptlib-2.17.4/*
+%dir %attr(755,root,root) %{_libdir}/ptlib-2.*
+%{_libdir}/ptlib-2.*/*
 
-%dir %attr(755,root,root) %{_libdir}/opal-3.17.5
-%{_libdir}/opal-3.17.5/*
+%dir %attr(755,root,root) %{_libdir}/opal-3.*
+%{_libdir}/opal-3.*/*
 
 #
 # Resiprocate Files
