@@ -25,7 +25,7 @@ cd /BUILDROOT
 #
 # Create the build directory
 #
-BUILD_DIR=/BUILDHOME/Devel/docker-build-root/${PACKAGE_NAME}
+BUILD_DIR=/BUILDHOME/Devel/docker-build-root/${PACKAGE_NAME}/docker-build
 rm -rf $BUILD_DIR
 mkdir -p $BUILD_DIR
 

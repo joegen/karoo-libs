@@ -22,7 +22,7 @@ SSH_PASS = sshpass -p `cat .sshpass`
 
 WWWREPOBASE = ${WWWROOT}/${PACKAGE_NAME}/${PROJECTVER}
 WWWREPOPATH = ${WWWREPOBASE}/${BASE_IMAGE}/${DISTRO}
-RPMPATH = ${HOME}/Devel/docker-build-root/${PACKAGE_NAME}/RPMBUILD/RPMS/${DISTRO}
+RPMPATH = ${HOME}/Devel/docker-build-root/${PACKAGE_NAME}/docker-build/RPMBUILD/RPMS/${DISTRO}
 
 SSH_OPTIONS = -v -o UserKnownHostsFile=./.known_hosts -o StrictHostKeyChecking=no
 SCP_RPM_PARAMS = ${RPMPATH}/* ${REPOUSER}@${REPOHOST}:${WWWREPOPATH}
